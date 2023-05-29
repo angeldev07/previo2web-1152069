@@ -5,8 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Selecciones</title>
+    <style>
+        .grilla {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-auto-rows: 1fr;
+            gap: 1rem
+        }
+    </style>
 </head>
 <body class="p-4 bg-[#0d1b2a] min-h-screen text-white">
+    <header>
+        <h1 class="text-4xl text-center">Listado de Selecciones</h1>
+    </header>
 
+    <main class="min-h-screen w-[90%] mx-auto max-w-[1100px]">
+        <!-- Filtro -->
+        <div class="my-4">
+            <h2>Se supone que debio funcionar, pero ni chatgpt pudo :c, perdón UnU</h2>
+            <form action="/selecciones/grupo">
+                <input type="text" maxlength="1" placeholder="grupo"  class="block text-black w-full py-2 px-4" autofocus>
+                <button type="submit" class="bg-green-500 inline-block py-1 px-6 text-white">Enviar</button>
+            </form>
+        </div>
+        <section class="w-full p-4 ">
+            <div class="mb-6 flex justify-between">
+                <a href="/selecciones/agregar" class="inline-block py-1 px-4 ml-auto text-white font-bold bg-[#2a9d8f] rounded-md" >Agregar nueva Seleccion</a>
+            </div>
+            <div class="grilla ">
+                <div class="p-4 w-full h-full rounded-md bg-[#415a77] shadow-lg" th:each="seleccion : ${selecciones}">
+                    <h2 class="pb-4 text-xl font-bold " th:text="${seleccion.nombre}"></h2>
+                    <!-- continente y grupo -->
+                    <div class="flex items-center justify-between mb-4">
+                        <div >
+                            <span class="block w-full">Continente</span>
+                            <span class="inline-block py-1 px-4 rounded-md text-white bg-orange-400" th:text="${seleccion.continente.nombre}">  </span>
+                        </div>
+                        <div>
+                            <span class="block w-full">Grupo</span>
+                            <span class="inline-block py-1 px-4 rounded-md text-white bg-green-500" th:text="${seleccion.grupo}"></span>
+                        </div>
+                    </div>
+                    <!-- Acciones -->
+                    <div class="flex justify-between">
+                        <div class="ml-auto">
+                            <a th:href="@{/selecciones/edit/{id}(id=${seleccion.id})}" class="inline-block py-1 px-4 mr-4 text-white font-bold bg-[#2a9d8f]">Editar</a>
+                            <a th:href="@{/selecciones/delete/{id}(id=${seleccion.id})}" class="inline-block py-1 px-4 text-white font-bold bg-[#e76f51]">Eliminar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 </body>
 </html>
